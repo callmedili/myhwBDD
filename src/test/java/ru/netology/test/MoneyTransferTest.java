@@ -36,8 +36,7 @@ public class MoneyTransferTest {
         Configuration.browserCapabilities = options;
     }
 
-    @Test
-    void shouldTransferMoneyBetweenCards() {
+    private DashboardPage loginAndOpenDashboard() {
         open("http://localhost:9999");
 
         LoginPage loginPage = new LoginPage();
@@ -48,6 +47,13 @@ public class MoneyTransferTest {
 
         DashboardPage dashboardPage = new DashboardPage();
         dashboardPage.verifyPage();
+
+        return dashboardPage;
+    }
+
+    @Test
+    void shouldTransferMoneyBetweenCards() {
+        DashboardPage dashboardPage = loginAndOpenDashboard();
 
         int firstCardBalance = dashboardPage.getFirstCardBalance();
         int secondCardBalance = dashboardPage.getSecondCardBalance();
@@ -78,16 +84,7 @@ public class MoneyTransferTest {
 
     @Test
     void shouldTransferMoneyFromFirstToSecondCard() {
-        open("http://localhost:9999");
-
-        LoginPage loginPage = new LoginPage();
-        loginPage.login("vasya", "qwerty123");
-
-        VerificationPage verificationPage = new VerificationPage();
-        verificationPage.verify("12345");
-
-        DashboardPage dashboardPage = new DashboardPage();
-        dashboardPage.verifyPage();
+        DashboardPage dashboardPage = loginAndOpenDashboard();
 
         int firstCardBalance = dashboardPage.getFirstCardBalance();
         int secondCardBalance = dashboardPage.getSecondCardBalance();
@@ -119,16 +116,7 @@ public class MoneyTransferTest {
     @Disabled("Known bug: transfer is allowed when amount exceeds card balance")
     @Test
     void shouldNotTransferMoreThanCardBalance() {
-        open("http://localhost:9999");
-
-        LoginPage loginPage = new LoginPage();
-        loginPage.login("vasya", "qwerty123");
-
-        VerificationPage verificationPage = new VerificationPage();
-        verificationPage.verify("12345");
-
-        DashboardPage dashboardPage = new DashboardPage();
-        dashboardPage.verifyPage();
+        DashboardPage dashboardPage = loginAndOpenDashboard();
 
         int firstCardBalance = dashboardPage.getFirstCardBalance();
         int secondCardBalance = dashboardPage.getSecondCardBalance();
