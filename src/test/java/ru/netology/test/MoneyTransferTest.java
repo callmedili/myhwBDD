@@ -23,6 +23,10 @@ public class MoneyTransferTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
 
+        if (Boolean.parseBoolean(System.getProperty("selenide.headless", "false"))) {
+            options.addArguments("--headless=new");
+        }
+
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("credentials_enable_service", false);
         prefs.put("password_manager_enabled", false);
